@@ -66,10 +66,10 @@ class WorldTableRow extends JPanel
 
 	static
 	{
-		FLAG_AUS = new ImageIcon(ImageUtil.getResourceStreamFromClass(WorldHopperPlugin.class, "flag_aus.png"));
-		FLAG_UK = new ImageIcon(ImageUtil.getResourceStreamFromClass(WorldHopperPlugin.class, "flag_uk.png"));
-		FLAG_US = new ImageIcon(ImageUtil.getResourceStreamFromClass(WorldHopperPlugin.class, "flag_us.png"));
-		FLAG_GER = new ImageIcon(ImageUtil.getResourceStreamFromClass(WorldHopperPlugin.class, "flag_ger.png"));
+		FLAG_AUS = new ImageIcon(ImageUtil.loadImageResource(WorldHopperPlugin.class, "flag_aus.png"));
+		FLAG_UK = new ImageIcon(ImageUtil.loadImageResource(WorldHopperPlugin.class, "flag_uk.png"));
+		FLAG_US = new ImageIcon(ImageUtil.loadImageResource(WorldHopperPlugin.class, "flag_us.png"));
+		FLAG_GER = new ImageIcon(ImageUtil.loadImageResource(WorldHopperPlugin.class, "flag_ger.png"));
 	}
 
 	private final JMenuItem favoriteMenuOption = new JMenuItem();
@@ -207,7 +207,12 @@ class WorldTableRow extends JPanel
 	void updatePlayerCount(int playerCount)
 	{
 		this.updatedPlayerCount = playerCount;
-		playerCountField.setText(String.valueOf(playerCount));
+		playerCountField.setText(playerCountString(playerCount));
+	}
+
+	private static String playerCountString(int playerCount)
+	{
+		return playerCount < 0 ? "OFF" : Integer.toString(playerCount);
 	}
 
 	void setPing(int ping)
@@ -272,7 +277,7 @@ class WorldTableRow extends JPanel
 		JPanel column = new JPanel(new BorderLayout());
 		column.setBorder(new EmptyBorder(0, 5, 0, 5));
 
-		playerCountField = new JLabel(world.getPlayers() + "");
+		playerCountField = new JLabel(playerCountString(world.getPlayers()));
 		playerCountField.setFont(FontManager.getRunescapeSmallFont());
 
 		column.add(playerCountField, BorderLayout.WEST);
